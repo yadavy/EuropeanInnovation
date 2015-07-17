@@ -1,9 +1,6 @@
 var index, stSound, postIndex, getSoundFile, getImageFile,
 	getArtists, getAlbums, getSongs, uploadFile, doUpdate;
 
-stSound = require('./soundStreaming');
-connectionDB = require('./connectionDB');
-
 exports.route = function (app) {
 	app.get('/', index);
 	app.post('/', uploadFile);
