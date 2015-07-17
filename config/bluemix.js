@@ -13,15 +13,9 @@ module.exports.serviceStartsWith = function(name) {
         var services = JSON.parse(process.env.VCAP_SERVICES);
         for (var service_name in services) {
             if (service_name.indexOf(name) === 0 ) {
-                var service = services[service_name][0];
-                return {
-                    url: service.credentials.url,
-                    username: service.credentials.username,
-                    password: service.credentials.password
-                };
+                return services[service_name][0];
             }
         }
-    } else {
     }
     return {};
 };

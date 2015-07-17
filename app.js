@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * Module dependencies.
  */
@@ -13,7 +15,6 @@ var lusca = require('lusca');
 var methodOverride = require('method-override');
 var multer  = require('multer');
 
-var _ = require('lodash');
 var MongoStore = require('connect-mongo')(session);
 var flash = require('express-flash');
 var path = require('path');
@@ -44,10 +45,20 @@ var app = express();
 /**
  * Connect to MongoDB.
  */
-mongoose.connect(secrets.db);
-mongoose.connection.on('error', function() {
-  console.error('MongoDB Connection Error. Please make sure that MongoDB is running.');
-});
+// Mongoose by default sets the auto_reconnect option to true.
+// Recommended a 30 second connection timeout because it allows for
+// plenty of time in most operating environments.
+console.log('mongo.uri:',secrets.mongodb);
+var connect = function () {
+  var options = {
+    server: { socketOptions: { keepAlive: 1, connectTimeoutMS: 30000 } },
+    replset: { socketOptions: { keepAlive: 1, connectTimeoutMS : 30000 } }
+  };
+  mongoose.connect(secrets.db, options);
+};
+connect();
+
+mongoose.connection.on('disconnected', connect);
 
 /**
  * Express configuration.

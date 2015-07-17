@@ -20,13 +20,12 @@
  */
 'use strict';
 
-var bluemix = require('./bluemix');
-var credentials = bluemix.serviceStartsWith('mongo');
+var bluemix      = require('./bluemix');
+var credentials  = bluemix.serviceStartsWith('mongo');
 
 module.exports = {
 
-  db: credentials.url || 'mongodb://localhost:27017/test',
-
+  db: process.env.MONGO_DB|| credentials.uri || 'mongodb://localhost:27017/test',
   sessionSecret: process.env.SESSION_SECRET || 'Your Session Secret goes here',
 
   mailgun: {
