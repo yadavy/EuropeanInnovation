@@ -21,7 +21,7 @@
 'use strict';
 
 var bluemix = require('./bluemix');
-var credentials = bluemix.serviceStartsWith('mongodb');
+var credentials = bluemix.serviceStartsWith('mongo');
 
 module.exports = {
 
